@@ -1,0 +1,15 @@
+stages:
+  - deploy
+
+variables:
+  DEPLOY_PATH: "/var/www/unity"
+
+deploy_dev:
+  stage: deploy
+  script:
+    - echo "Развёртывание статики из ветки dev"
+    - sudo rsync -av --delete --no-perms --no-group --no-times --exclude='.git' --exclude='.gitlab-ci.yml' --chown=www-data:www-data ./ $DEPLOY_PATH/
+  only:
+    - dev
+  tags:
+    - dev
